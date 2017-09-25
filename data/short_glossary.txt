@@ -1,0 +1,100 @@
+107% rule
+Aerodynamics
+Airbox
+Apex
+Appeal
+Autoclave
+Backmarker
+Ballast
+Bargeboard
+Blistering
+Bodywork
+Bottoming
+Brake balance
+CAD
+Camber
+CFD
+Chassis
+Chicane
+Clean air
+Coanda effect
+Cockpit
+Compound
+Debrief
+Degradation
+Delta time
+Diffuser
+Downforce
+Drag
+Drive-through penalty
+Drivers' briefing
+DRS
+ECU
+Endplate
+Energy Store
+ERS
+Flat spot
+Formation lap
+G-force
+Graining
+Gravel trap
+Grip
+Handling
+HANS Device
+Headrest
+Heat cycle
+Installation lap
+Jump start
+Kevlar
+Left-foot braking
+Lock-up
+Lollipop
+Marbles
+Marshal
+Monocoque
+Nomex
+Option tyre
+Out brake
+Oversteer
+Paddles
+Paddock
+Parc ferme
+Pit board
+Pit wall
+Pits
+Plank
+Pole position
+Powertrain
+Practice
+Prime tyre
+Protest
+Qualifying
+R&D
+Reconnaissance lap
+Retirement
+Ride height
+Rumblestrip
+Safety Car
+Scrutineering
+Sectors
+Shakedown
+Sidepod
+Slipstreaming
+Steward
+Stop-go penalty
+Tear-off strips
+Telemetry
+Torque
+Traction
+Traction control
+Tub
+Turbulence
+Turbocharger
+Tyre compound
+Tyre warmer
+Understeer
+Undertray
+Visor strip
+Wheelbase
+Yaw
+Zylon
