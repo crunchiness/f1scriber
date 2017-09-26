@@ -1,4 +1,5 @@
 import io
+import av
 
 
 class AudioIterable:
@@ -17,9 +18,12 @@ class AudioIterable:
 
 
 audio_file_name = 'resources/output.aac'
-n = AudioIterable(audio_file_name, 32*1024)
-asdf = [len(chunk) for chunk in n]
-print asdf
+container = av.open(audio_file_name)
+for frame in container.decode():
+    print frame
+# n = AudioIterable(audio_file_name, 32*1024)
+# asdf = [len(chunk) for chunk in n]
+# print asdf
 
 # with io.open(audio_file_name, 'rb') as audio_file:
 #     size = -1
