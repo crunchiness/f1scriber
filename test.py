@@ -1,23 +1,7 @@
-import io
 import av
 
 
-class AudioIterable:
-    def __init__(self, path, chunk_size):
-        self.path = path
-        self.chunk_size = chunk_size
-
-    def __iter__(self):
-        with io.open(self.path, 'rb') as audio_file:
-            while True:
-                chunk = audio_file.read(self.chunk_size)
-                if len(chunk) > 0:
-                    yield chunk
-                else:
-                    raise StopIteration()
-
-
-class AudioIterable2:
+class AudioFrameIterable:
     def __init__(self, path):
         self.container = av.open(path)
         self.stream = next(s for s in self.container.streams if s.type == 'audio')
@@ -29,31 +13,37 @@ class AudioIterable2:
         raise StopIteration()
 
 
+class AudioIterable:
+    def __init__(self, path, output_chunk_size, output_rate, output_format='s16', output_layout='mono'):
+        self.afi = AudioFrameIterable(path)
+        self.chunk_size = output_chunk_size
+        self.resampler = av.AudioResampler(
+            format=av.AudioFormat(output_format).packed,
+            layout=output_layout,
+            rate=output_rate,
+        )
+        self.buffer = b''
+
+    def __iter__(self):
+        for frame in self.afi:
+            new_frame = self.resampler.resample(frame)
+            self.buffer += new_frame.planes[0].to_bytes()
+            if len(self.buffer) >= self.chunk_size:
+                chunk = self.buffer[:self.chunk_size]
+                self.buffer = self.buffer[self.chunk_size:]
+                yield chunk
+        while len(self.buffer) > 0:
+            chunk = self.buffer[:self.chunk_size]
+            self.buffer = self.buffer[self.chunk_size:]
+            yield chunk
+        raise StopIteration()
+
+
 audio_file_name = 'resources/output.aac'
 # audio_file_name = 'http://radio.m-1.fm:80/m1/mp3'
 
-ai = AudioIterable2(audio_file_name)
+ai = AudioIterable(audio_file_name, 32*1024, 16000)
 
-resampler = av.AudioResampler(
-    format=av.AudioFormat('s16').packed,
-    layout='mono',
-    rate=16000,
-)
-
-data = b''
-
-
-def send(smth):
-    print len(smth)
-
-
-for i, frame in enumerate(ai):
-    fram = resampler.resample(frame)
-    data += fram.planes[0].to_bytes()
-    if len(data) > 32*1024:
-        send(data[:32*1024])
-        data = data[32*1024:]
-if len(data) > 0:
-    send(data[:32 * 1024])
-    data = data[32 * 1024:]
-
+with open('out.pcm', 'w') as f:
+    for chunk in ai:
+        f.write(chunk)
